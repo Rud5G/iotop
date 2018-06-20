@@ -193,7 +193,10 @@ def parse_proc_pid_status(pid):
     result_dict = {}
     try:
         for line in open('/proc/%d/status' % pid):
-            key, value = line.split(':\t', 1)
+            left, separator, right = line.partition(':\t')
+            key = left
+            value = right
+            """key, value = line.split(':\t', 1)"""
             result_dict[key] = value.strip()
     except IOError:
         pass  # No such process
